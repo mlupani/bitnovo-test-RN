@@ -7,6 +7,10 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -27,10 +31,12 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="index" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white'}}} />
+        <Stack.Screen name="Solicitud-pago" options={{headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white'}}} />
+        <Stack.Screen name="Pago-recibido" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white',}}} />
+        <Stack.Screen name="Mostrar-qr-pago" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: '#035AC5',}}} />
       </Stack>
     </ThemeProvider>
   );
