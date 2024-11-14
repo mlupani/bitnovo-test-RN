@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "bitnovo-test",
-    "slug": "bitnovo-test",
+    "slug": "bitnovo-rn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
