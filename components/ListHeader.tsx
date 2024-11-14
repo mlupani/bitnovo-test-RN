@@ -21,7 +21,7 @@ export const ListHeader = ({title, titleSelect, selectedOpt, showList, setShowLi
         }
         {
             showList &&
-                <Pressable style={{marginLeft: 10, marginRight: 50}} onPress={() => setShowList(false)}>
+                <Pressable style={{marginLeft: 20, marginRight: 50}} onPress={() => setShowList(false)}>
                     <AntDesign name="arrowleft" size={24} color="black" />
                 </Pressable>
         }

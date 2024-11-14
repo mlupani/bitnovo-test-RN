@@ -11,8 +11,8 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       {
-        status === 'CO' ?
-          <ConfettiCannon count={200} origin={{x: -10, y: 0}} /> : null
+        status === 'CO' &&
+          <ConfettiCannon count={200} origin={{x: -10, y: 0}} />
       }
       <Image
         style={{width: 80, height: 80, zIndex: -50}}
@@ -21,21 +21,24 @@ export default function HomeScreen() {
       />
       <ParallaxScrollView headerBackgroundColor={{ light: '#ffffff', dark: '#1D3D47' }}>
         <View style={{flex: 1,justifyContent: 'space-around', alignItems: 'center', gap: 20, marginTop: 150}}>
-          {/* <Image
-              style={{width: 100, height: 100}}
-              source={require('../assets/images/tick-circle.png')}
-              contentFit="cover"
-            /> */}
+          {
+            status === 'CO' &&
+              <Image
+                style={{width: 100, height: 100}}
+                source={require('../assets/images/tick-circle.png')}
+                contentFit="cover"
+              />
+          }
           <Text style={{fontSize: 20, fontWeight: 'bold', color: '#002859'}}>{status === 'CO' ? 'Pago recibido' : 'Pago cancelado'}</Text>
-          <Text style={{color: '#647184', textAlign: 'center'}}>
+          <Text style={{color: '#647184', textAlign: 'center', width: 300}}>
             {
-              status === 'CO' ? 'El pago se ha confirmado con &eacute;xito':
+              status === 'CO' ? 'El pago se ha confirmado con éxito':
               'El pago ha sido cancelado'
             }
           </Text>
         </View>
         </ParallaxScrollView>
-        <Link style={{color: '#035AC5', fontSize: 18, position: 'absolute', bottom: 50}} href="/">Finalizar</Link>
+        <Link style={{color: '#035AC5', fontSize: 18, position: 'absolute', bottom: 50, width: 150, textAlign: 'center'}} href="/">Finalizar</Link>
       </View>
   );
 }

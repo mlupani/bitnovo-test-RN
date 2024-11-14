@@ -4,31 +4,14 @@ import { ParallaxScrollView } from '@/components';
 import QRCode from 'react-native-qrcode-svg';
 import { AntDesign } from '@expo/vector-icons';
 import { useEffect } from 'react';
+import { createWebSocket } from '@/utils/create-web-socket';
 
 export default function MostrarQRPago() {
 
   const { value, currency, url, identifier } = useLocalSearchParams();
 
-  const ws = new WebSocket(`wss://payments.pre-bnvo.com/ws/merchant/${identifier}`);
+  createWebSocket(identifier as string);
 
-  ws.onmessage = function (event) {
-    const data = JSON.parse(event.data);
-    try {
-      const { url_ok, status } = data
-      if(status){
-        router.replace({
-          pathname: url_ok ?? '/Pago-recibido',
-          params: {
-            status
-          }
-        })
-      }
-      ws.close();
-    } catch (err) {
-      console.log(err);
-    }
-  };
- 
   return (
     <View style={{flex: 1}}>
       <ParallaxScrollView
@@ -58,7 +41,7 @@ export default function MostrarQRPago() {
           <Text style={styles.value}>
             {value} {currency}
           </Text>
-          <Text style={{color: 'white'}}>
+          <Text style={{color: 'white', width: 300, textAlign: 'center'}}>
             Esta pantalla se actualizará automáticamente.
           </Text>
           <View style={{flex: 1}} />

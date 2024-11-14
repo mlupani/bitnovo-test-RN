@@ -6,6 +6,7 @@ import { ListHeader, OptionList, ParallaxScrollView } from '@/components';
 import { countries } from '@/constants';
 import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
+import { createWebSocket } from '@/utils/create-web-socket';
 
 export default function SolicitudPagoScreen() {
 
@@ -19,25 +20,7 @@ export default function SolicitudPagoScreen() {
   const [showModal, setShowModal] = useState(false);
   const [showTextShare, setshowTextShare] = useState("")
 
-  const ws = new WebSocket(`wss://payments.pre-bnvo.com/ws/merchant/${identifier}`);
-
-  ws.onmessage = function (event) {
-    const data = JSON.parse(event.data);
-    try {
-      const { url_ok, status } = data
-      if(status){
-        router.replace({
-          pathname: url_ok ?? '/Pago-recibido',
-          params: {
-            status
-          }
-        })
-      }
-      ws.close();
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  createWebSocket(identifier as string);
 
   useEffect(() => {
     const subscription = AppState.addEventListener('change', async nextAppState => {
@@ -61,6 +44,7 @@ export default function SolicitudPagoScreen() {
         message:
           'Solicitud de pago: ' + url,
       });
+      setshowTextShare("Tu solicitud de pago enviada ha sido enviado con éxito.")
     } catch (error: any) {
       console.log(error)
     }
@@ -95,7 +79,7 @@ export default function SolicitudPagoScreen() {
 
   if(showList){
     return (
-      <View style={{marginTop: 10}}>
+      <View style={{marginTop: 20}}>
         <ListHeader showList={showList} setShowList={setShowList} title={"Seleccionar pais"} titleSelect={'Seleccionar pais'} selectedOpt={selectedCountry} />
         <OptionList optionsList={countries} setChangeValue={setSelectedCountry} selectedValue={selectedCountry} />
       </View>
@@ -117,7 +101,7 @@ export default function SolicitudPagoScreen() {
             <Text style={{fontSize: 35, fontWeight: 'bold'}}>{`${value.toString().replaceAll('.',',')} ${currency}`}</Text>
           </View>
         </View>
-        <Text style={{alignSelf: 'center', fontSize: 13, color: 'gray'}}>Comparte el enlace de pago con el cliente</Text>
+        <Text style={{alignSelf: 'center', fontSize: 13, color: 'gray', width: 300, textAlign: 'center'}}>Comparte el enlace de pago con el cliente</Text>
         <View style={styles.inputsContainer}>
           <View style={styles.inputsView}>
             <Image
@@ -156,8 +140,8 @@ export default function SolicitudPagoScreen() {
             />
             {
               isEditingPhone &&
-                <Pressable style={{...styles.inputs, gap: 5, alignItems: 'center', width: 60, marginRight: 10}} onPress={() => setShowList(true)}>
-                    <Text>{selectedCountry?.id}</Text>
+                <Pressable style={{...styles.inputs, alignItems: 'center', width: 60, marginRight: 10}} onPress={() => setShowList(true)}>
+                    <Text style={{width: 40}}>{selectedCountry?.id}</Text>
                     <AntDesign name="caretdown" size={12} color="black" />
                 </Pressable>
             }
@@ -176,13 +160,13 @@ export default function SolicitudPagoScreen() {
               contentFit="cover"
             />
             <Pressable style={styles.inputs} onPress={() => onShare()}>
-              <Text>Compartir con otras aplicaciones</Text>
+              <Text style={{width: 300}}>Compartir con otras aplicaciones</Text>
             </Pressable>
           </View>
         </View>
       </ParallaxScrollView>
       <View style={{gap: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 50}}>
-        <Link style={{color: '#035AC5', fontSize: 20}} replace href="/"> Nueva solicitud</Link>
+        <Link style={{color: '#035AC5', fontSize: 20, width: 150}} replace href="/"> Nueva solicitud</Link>
         <Image
           style={{width: 20, height: 20}}
           source={require('../assets/images/wallet-add.png')}

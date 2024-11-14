@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, TextInput, Pressable, Keyboard } from 'react-native';
 import { useEffect, useState } from 'react';
 import { ListHeader, OptionList, ParallaxScrollView} from '@/components';
-import { currencyList, CHARACTER_LIMIT, deviceId } from '@/constants';
+import { currencyList, CHARACTER_LIMIT } from '@/constants';
 import { Currency } from '@/interfaces';
 import { router } from 'expo-router';
 
@@ -23,7 +23,7 @@ export default function CrearPagoScreen() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-device-id': deviceId
+        'x-device-id': process.env.EXPO_PUBLIC_DEVICE_ID ?? ''
       },
       body: JSON.stringify({
         expected_output_amount: Number(valueToSend.replaceAll('.', ',')).toFixed(2),
@@ -62,7 +62,7 @@ export default function CrearPagoScreen() {
               !showList ? (
                   <View style={{flex: 1, justifyContent: 'space-between'}}>
                     <View style={{...styles.inputContainer, height: isEditing ? 150 : 300}}>
-                        <TextInput placeholderTextColor={'#C0CCDA'} onPress={() => setIsEditing(true)} style={styles.valueInput} placeholder={value ? '' : `${currencySelected.symbol} 0.00`} 
+                        <TextInput placeholderTextColor={'#C0CCDA'} onPress={() => setIsEditing(true)} style={{...styles.valueInput, width: !value ? 300 : 'auto'}} placeholder={value ? '' : `${currencySelected.symbol} 0.00`} 
                         value={`${value ?? '' }`}
                         keyboardType="numeric" onChangeText={(text) => setValue(text.replaceAll('.', ','))} />
                         {
@@ -73,11 +73,11 @@ export default function CrearPagoScreen() {
                         }
                     </View>
                     <View style={{...styles.conceptContainer }}>
-                      <Text style={{fontWeight: 'bold'}}>Concepto</Text>
+                      <Text style={{fontWeight: 'bold', marginBottom: 10}}>Concepto</Text>
                       <TextInput multiline={true} value={concept.substring(0,CHARACTER_LIMIT - 1)} onChangeText={val => setConcept(val)} placeholder='Añade descripción del pago' style={styles.inputConcept} keyboardType="default" />
                       {
                         concept &&
-                          <Text style={{alignSelf: 'flex-end', color: 'gray'}}>{concept.length}/{CHARACTER_LIMIT} caracteres</Text>
+                          <Text style={{alignSelf: 'flex-end', color: 'gray', width: 200, textAlign: 'right'}}>{concept.length}/{CHARACTER_LIMIT} caracteres</Text>
                       }
                     </View>
                   </View>
@@ -92,7 +92,7 @@ export default function CrearPagoScreen() {
           !showList &&
           <Pressable disabled={sended} style={{...styles.buttonContinuar, backgroundColor: value ? '#035AC5' : '#EAF3FF'}}
           onPress={solicitudPago}>
-            <Text style={{color: value ? 'white' : '#71B0FD', fontSize: 18}}>
+            <Text style={{color: value ? 'white' : '#71B0FD', fontSize: 18, textAlign: 'center'}}>
               {sended ? 'Enviando...' : 'Continuar'}
             </Text>
           </Pressable>
@@ -124,18 +124,17 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     marginBottom: 20,
-    marginHorizontal: 20
+    marginHorizontal: 20,
   },
   inputConcept: {
     maxHeight: 120,
     height: 56,
     flex: 1,
-    borderColor: 'gray',
     borderWidth: 1,
     paddingHorizontal: 10,
+    borderColor: '#E5E9F2',
   },
   buttonContinuar: {
-    flexDirection: 'row',
     justifyContent: 'center',
     alignSelf: 'center',
     marginVertical: 30,

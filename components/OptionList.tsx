@@ -13,7 +13,7 @@ export const OptionList = ({optionsList, setChangeValue, selectedValue}: Props) 
   return (
     <View style={{marginTop: 20}}>
         <TextInput value={search} onChangeText={val => setSearch(val)} placeholder='Buscar' style={styles.searchInput} keyboardType="default" />
-        <ScrollView style={{marginTop: 10, flexGrow: 1, height: Dimensions.get('screen').height - 200}}>
+        <ScrollView style={{marginTop: 10, flexGrow: 1, height: Dimensions.get('screen').height - 250}}>
             <View style={{marginTop: 20, marginHorizontal: 10}}>
             {
                 optionsList.map((option) => {

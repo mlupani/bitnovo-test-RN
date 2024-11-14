@@ -33,10 +33,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'light' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white'}}} />
-        <Stack.Screen name="Solicitud-pago" options={{headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white'}}} />
-        <Stack.Screen name="Pago-recibido" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: 'white',}}} />
-        <Stack.Screen name="Mostrar-qr-pago" options={{ headerShown: false, statusBarStyle: 'light', contentStyle: {backgroundColor: '#035AC5',}}} />
+        <Stack.Screen name="index" options={{ headerShown: false, statusBarStyle: 'auto', contentStyle: {backgroundColor: 'white'}}} />
+        <Stack.Screen name="Solicitud-pago" options={{headerShown: false, statusBarStyle: 'auto', contentStyle: {backgroundColor: 'white'}}} />
+        <Stack.Screen name="Pago-recibido" options={{ headerShown: false, statusBarStyle: 'auto', contentStyle: {backgroundColor: 'white',}}} />
+        <Stack.Screen name="Mostrar-qr-pago" options={{ headerShown: false, statusBarStyle: 'auto', contentStyle: {backgroundColor: '#035AC5',}}} />
       </Stack>
     </ThemeProvider>
   );
